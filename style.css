@@ -4,3 +4,11 @@
     gap: 50px;
     margin-top: 20px;
 }
+
+.card {
+    background-color: #c2ebce;
+    border: 1px solid #126437;
+    border-radius: 12px;       
+    width: 200px;
+    text-align: center;
+}

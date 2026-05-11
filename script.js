@@ -1,11 +1,13 @@
 // define elements
 const container = document.getElementById('container');
 const btnCurrent = document.getElementById('btn-current');
+const btnForecast = document.getElementById('btn-forecast');
 
 // Coordinates for cities
 const CARY = { name: "Cary, USA", lat: 35.79, lon: -78.78 };
 const NSK = { name: "Novosibirsk, RU", lat: 55.04, lon: 82.93 };
 
+// current weather
 async function loadCurrentWeather() {
     container.innerHTML = "<p>Loading current weather...</p>";
     
@@ -31,13 +33,65 @@ async function loadCurrentWeather() {
             <div class="card">
                 <h3>${NSK.name}</h3>
                 <p style="font-size: 24px;">${dataNSK.current_weather.temperature}°C</p>   
-            </div>
-            
+            </div>             
         `;
     } catch (error) {
         container.innerHTML = "<p style='color:red;'>Error loading data. Please try again.</p>";
         console.error("Fetch error:", error);
     }
 }
-
 btnCurrent.addEventListener('click', loadCurrentWeather);
+
+
+// 7-day forecast
+async function loadForecast() {
+    container.innerHTML = "<p>Loading 7-day forecast...</p>";
+    
+    // links to daily max and min temperature for 7-day
+    const urlCary = `https://api.open-meteo.com/v1/forecast?latitude=${CARY.lat}&longitude=${CARY.lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+    const urlNSK = `https://api.open-meteo.com/v1/forecast?latitude=${NSK.lat}&longitude=${NSK.lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+
+    try {
+        const [resCary, resNSK] = await Promise.all([
+            fetch(urlCary),
+            fetch(urlNSK)
+        ]);
+
+        const dataCary = await resCary.json();
+        const dataNSK = await resNSK.json();
+
+        // additional function for printing 7 days
+        const createForecastHTML = (data) => {
+            let html = '<div>';
+            // Loop for 7 days
+            for (let i = 0; i < 7; i++) {
+                html += `
+                    <div>
+                        ${data.daily.time[i]}:
+                        ${data.daily.temperature_2m_max[i]}° /
+                        ${data.daily.temperature_2m_min[i]}°
+                    </div>`;
+            }
+            html += '</div>';
+            return html;
+        };
+
+        container.innerHTML = `
+            <div class="card">
+                <h3>${CARY.name}</h3>
+                ${createForecastHTML(dataCary)}
+            </div>
+            <div class="card">
+                <h3>${NSK.name}</h3>
+                ${createForecastHTML(dataNSK)}
+            </div>
+        `;
+    } catch (error) {
+        container.innerHTML = "<p style='color:red;'>Error loading forecast.</p>";
+        console.error(error);
+    }
+}
+btnForecast.addEventListener('click', loadForecast);
+
+
+

@@ -62,14 +62,14 @@ async function loadForecast() {
 
         // additional function for printing 7 days
         const createForecastHTML = (data) => {
-            let html = '<div>';
+            let html = '<div class="forecast-list">';
             // Loop for 7 days
             for (let i = 0; i < 7; i++) {
                 html += `
-                    <div>
-                        ${data.daily.time[i]}:
-                        ${data.daily.temperature_2m_max[i]}° /
-                        ${data.daily.temperature_2m_min[i]}°
+                    <div class="forecast-day">
+                        <span>${data.daily.time[i]}:</span> 
+                        <span>${data.daily.temperature_2m_max[i]}°</span>
+                        <span>${data.daily.temperature_2m_min[i]}°</span>
                     </div>`;
             }
             html += '</div>';

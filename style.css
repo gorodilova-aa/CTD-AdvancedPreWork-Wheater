@@ -12,3 +12,19 @@
     width: 200px;
     text-align: center;
 }
+
+.forecast-list {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.forecast-day {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.forecast-day:last-child {
+    border-bottom: none;
+}

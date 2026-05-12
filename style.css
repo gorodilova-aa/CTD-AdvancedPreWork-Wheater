@@ -28,3 +28,8 @@
 .forecast-day:last-child {
     border-bottom: none;
 }
+
+.temp {
+    width: 35px;        /* Фиксированная ширина */
+    text-align: right;  /* Выравнивание внутри этих 40px */
+}

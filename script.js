@@ -84,10 +84,10 @@ async function loadForecast() {
             for (let i = 0; i < 7; i++) {
                 html += `
                     <div class="forecast-day">
-                        <span>${data.daily.time[i]}:</span> 
+                        <span>${data.daily.time[i].slice(5)}:</span> 
                         <span>${getWeatherIcon(data.daily.weathercode[i])}</span>
-                        <span>${Math.round(data.daily.temperature_2m_max[i])}°</span>
-                        <span>${Math.round(data.daily.temperature_2m_min[i])}°</span>
+                        <span class="temp">${Math.round(data.daily.temperature_2m_max[i])}°</span>
+                        <span class="temp">${Math.round(data.daily.temperature_2m_min[i])}°</span>
                     </div>`;
             }
             html += '</div>';

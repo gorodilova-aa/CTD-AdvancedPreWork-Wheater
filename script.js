@@ -21,6 +21,12 @@ function getWeatherIcon(code) {
     return '☁️';                               // Default
 }
 
+// get wind direction
+function getWindDirection(degree) {
+    const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const index = Math.round(degree / 45) % 8;
+    return directions[index];
+}
 
 // current weather
 async function loadCurrentWeather() {
@@ -44,12 +50,16 @@ async function loadCurrentWeather() {
             <div class="card">
                 <h3>${CARY.name}</h3>
                 <p style="font-size: 24px;">${getWeatherIcon(dataCary.current_weather.weathercode)}
-                ${Math.round(dataCary.current_weather.temperature)}°C</p>    
+                ${Math.round(dataCary.current_weather.temperature)}°C</p>
+                <p style="font-size: 20px;">${dataCary.current_weather.windspeed} km/h
+                ${getWindDirection(dataCary.current_weather.winddirection)}</p>
             </div>
             <div class="card">
                 <h3>${NSK.name}</h3>
                 <p style="font-size: 24px;">${getWeatherIcon(dataNSK.current_weather.weathercode)}
-                ${Math.round(dataNSK.current_weather.temperature)}°C</p>   
+                ${Math.round(dataNSK.current_weather.temperature)}°C</p>  
+                <p style="font-size: 20px;"> ${dataNSK.current_weather.windspeed} km/h
+                ${getWindDirection(dataNSK.current_weather.winddirection)}</p>   
             </div>             
         `;
     } catch (error) {

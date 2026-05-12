@@ -23,8 +23,8 @@ Or, if using VS Code, use the Live Server extension for the best experience.
 * Weather Icons: Integrated WMO weather codes to display visual icons for better UX.
 
 ## Data Points Used
-Cary, NC (USA): Lat 35.79, Lon -78.78
-Novosibirsk (Russia): Lat 55.04, Lon 82.93
+* Cary, NC (USA): Lat 35.79, Lon -78.78
+* Novosibirsk (Russia): Lat 55.04, Lon 82.93
 
 ## Technologies Used
 * HTML5

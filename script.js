@@ -65,8 +65,8 @@ async function loadForecast() {
     container.innerHTML = "<p>Loading 7-day forecast...</p>";
     
     // links to daily max and min temperature for 7-day
-    const urlCary = `https://api.open-meteo.com/v1/forecast?latitude=${CARY.lat}&longitude=${CARY.lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
-    const urlNSK = `https://api.open-meteo.com/v1/forecast?latitude=${NSK.lat}&longitude=${NSK.lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+    const urlCary = `https://api.open-meteo.com/v1/forecast?latitude=${CARY.lat}&longitude=${CARY.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
+    const urlNSK = `https://api.open-meteo.com/v1/forecast?latitude=${NSK.lat}&longitude=${NSK.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
 
     try {
         const [resCary, resNSK] = await Promise.all([
@@ -85,8 +85,9 @@ async function loadForecast() {
                 html += `
                     <div class="forecast-day">
                         <span>${data.daily.time[i]}:</span> 
-                        <span>${data.daily.temperature_2m_max[i]}°</span>
-                        <span>${data.daily.temperature_2m_min[i]}°</span>
+                        <span>${getWeatherIcon(data.daily.weathercode[i])}</span>
+                        <span>${Math.round(data.daily.temperature_2m_max[i])}°</span>
+                        <span>${Math.round(data.daily.temperature_2m_min[i])}°</span>
                     </div>`;
             }
             html += '</div>';
